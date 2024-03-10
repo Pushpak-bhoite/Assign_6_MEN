@@ -7,14 +7,14 @@
 
 html {
     font-size: 62.5%;
-
-    
+    overflow-x: hidden;    
 }
 
-a,
-li {
+a ,li {
     font-size: 1.7rem;
-    color: #20262E;
+    /* color: #20262E; */
+    color:#FFF;
+    overflow-x: hidden;    
 }
 
 a {
@@ -37,33 +37,35 @@ header {
     position: absolute;
     top: 0;
     left: 0;
-    /* flex-direction: column; */
-    transform:translate(-100%)
+    /* transform:translate(-100%); */
+    transition: all 0.3s linear;
 }
 
 .nav-first {
-    width: 50%;
-    max-width: 52rem;
-    min-width: 52rem;
+    width: 26%;
+    max-width: 33rem;
+    min-width: 33rem;
     background-color: #655DBB;
+    box-shadow: 1rem 0 2rem  #655DBB;
 }
 
-.nav-second {
-    width: 50%;
-    background-color: #3E54AC;
 
+.nav-second {
+    width: 95%;
+    background-color: #3E54AC;
 }
 
 .navbar-list {
+    /* top:10%; */
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     flex-direction: column;
     width: 90%;
-    background-color: #ECF2ff;
+     background-color: #0e2238;    /*#ECF2ff */
 }
 
-.navbar-list ul {
+.navbar-list ul{
     display: flex;
     ;
     flex-direction: column;
@@ -87,8 +89,8 @@ header {
 }
 
 .fa-square-xmark {
-    position: absolute;
-    top: 10%;
-    left: 30%;
+    /* position: absolute; */
+    /* top: 10%;
+    left: 30%; */
     font-size: 3.2rem;
 }

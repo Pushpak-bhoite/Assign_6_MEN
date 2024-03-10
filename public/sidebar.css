@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "lexend Deca Light";
+}
+
+html {
+    font-size: 62.5%;
+
+    
+}
+
+a,
+li {
+    font-size: 1.7rem;
+    color: #20262E;
+}
+
+a {
+    text-decoration: none;
+}
+
+.fa-bars {
+    font-size: 3.2rem;
+}
+
+header {
+    height: 10rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navbar {
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* flex-direction: column; */
+    transform:translate(-100%)
+}
+
+.nav-first {
+    width: 50%;
+    max-width: 52rem;
+    min-width: 52rem;
+    background-color: #655DBB;
+}
+
+.nav-second {
+    width: 50%;
+    background-color: #3E54AC;
+
+}
+
+.navbar-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+    background-color: #ECF2ff;
+}
+
+.navbar-list ul {
+    display: flex;
+    ;
+    flex-direction: column;
+    gap: 2.4rem;
+    list-style: none;
+}
+
+.navbar-list a {
+    font-size: 2.4rem;
+    text-transform: uppercase;
+}
+
+.navbar-list a:hover {
+    /* text-decoration: underline; */
+    color: #3E54AC;
+    font-size: 2.7rem;
+}
+
+.active {
+    transform: translateX(0);  /*look at navbar class property*/
+}
+
+.fa-square-xmark {
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    font-size: 3.2rem;
+}

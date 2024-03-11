@@ -33,9 +33,31 @@ const registrationSchema = new mongoose.Schema({
         type: String,
         required: false,
         minlength: 1 // assuming minimum password length is 8 characters
+    },
+    frole: {
+        type: String,
+        default: "User"
     }
+
+
 }, { versionKey: false });
 
-const Registration = mongoose.model('Registration', registrationSchema);
 
-module.exports = Registration;
+const productSchema = new mongoose.Schema({
+    pname: {
+        type: String,
+        required: true,
+        minlength: 3
+    }
+}, { versionKey: false })
+
+const User = mongoose.model('Registration', registrationSchema);
+const Product = mongoose.model('Product', productSchema);
+
+// module.exports = Registration;
+
+module.exports = {
+    User,
+    Product
+};
+

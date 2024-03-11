@@ -16,7 +16,7 @@
 
   <div class="container d-flex justify-content-center">
     <form class="w-50" action="/login" method="post">
-      
+
       <div class="mb-3">
         <label for="femail" class="form-label">Email address</label>
         <input name="fmail" type="email" class="form-control" id="exampleInputEmail1">
@@ -26,8 +26,12 @@
         <input name="fpass" type="password" class="form-control" id="fpassid">
       </div>
       <div class="mb-3">
-        <label for="fcpassid" class="form-label">Confirm Password</label>
-        <input name="fcpass" type="password" class="form-control" id="fcpassid">
+        <label for="myRole" class="form-label">Role</label>
+
+        <select class="form-select " name="frole" id="myRole" aria-label="Default select example">
+          <option value="User" selected>User</option>
+          <option value="Admin">Admin</option>
+        </select>
       </div>
 
       <button type="submit" class="btn btn-primary form-control">Login</button>

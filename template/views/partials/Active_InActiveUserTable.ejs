@@ -1,0 +1,128 @@
+<div id="UserDash">
+    <h1 class="text-white">Hello... Admin</h1>
+
+    <table class="table table-dark active">
+        <div class="text-center active"><h2> Active Users </h2> </div>
+
+        <thead>
+            <tr>
+                <!-- <th scope="col">sr</th> -->
+                <th scope="col">FirstName</th>
+                <th scope="col">LastName</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Email</th>
+                <th scope="col">Operations</th>
+                <th scope="col">State</th>
+
+            </tr>
+
+        </thead>
+        <tbody > 
+            <%if(locals.Udata){ Udata.forEach(data=> {
+
+                if(data.frole === "Admin" || data.state === false )
+                { return; // Skip this iteration
+                }%>
+            
+                    <td>
+                        <%= data.ffname %>
+                    </td>
+                    <td>
+                        <%= data.flname %>
+                    </td>
+                    <td>
+                        <%= data.fphone %>
+                    </td>
+                    <td>
+                        <%= data.fgender %>
+                    </td>
+                    <td>
+                        <%= data.fmail %>
+                    </td>
+
+                    <td>
+                        <button type="button" class="btn btn-warning">Edit</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </td>
+                    <td>
+                        <form method="post" action="/stateChange/<%=data._id%>" class="ms-2">
+                            <input type="hidden" name="u_id" value='<%=data._id%>'>
+                            <input type="hidden" name="state" value='<%=data.state%>'>
+                             <button type="submit" class="btn btn-primary">block</button> 
+                            </form>
+
+                    </tr>
+                    <% });%>
+                        <% } %>
+
+        </tbody>
+
+
+    </table>
+
+
+    <table class="table table-dark in-active ">
+        <div class="text-center in-active"><h2> In-Active Users </h2> </div>
+
+        <thead>
+            <tr>
+                <!-- <th scope="col">sr</th> -->
+                <th scope="col">FirstName</th>
+                <th scope="col">LastName</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Email</th>
+                <th scope="col">Operations</th>
+                <th scope="col">State</th>
+
+            </tr>
+
+        </thead>
+        <tbody > 
+            <%if(locals.Udata){ Udata.forEach(data=> {
+
+                if(data.frole === "Admin" || data.state === true)
+                { return; // Skip this iteration
+                }%>
+            
+                    <td>
+                        <%= data.ffname %>
+                    </td>
+                    <td>
+                        <%= data.flname %>
+                    </td>
+                    <td>
+                        <%= data.fphone %>
+                    </td>
+                    <td>
+                        <%= data.fgender %>
+                    </td>
+                    <td>
+                        <%= data.fmail %>
+                        <%= data._id %>
+                    </td>
+
+                    <td>
+                        <button type="button" class="btn btn-warning">Edit</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </td>
+                    <td>
+                        <form method="post" action="/stateChange/<%=data._id%>" class="ms-2">
+                            <input type="hidden" name="state" value='<%=data.state%>'>
+                             <button type="submit" class="btn btn-primary">Un-block</button> 
+                            </form>
+                    </td>
+
+                    </tr>
+                    <% });%>
+                        <% } %>
+
+        </tbody>
+
+
+    </table>
+
+
+
+</div>

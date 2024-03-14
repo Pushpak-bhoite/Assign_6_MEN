@@ -147,3 +147,16 @@ a.sidebar-link:hover {
     transform: rotate(45deg);
     transition: all .2s ease-out;
 }
+
+
+/* This is logic for to show admin content and user content */
+#targetUser:not(.d-user) .d-uId{
+    display: none;
+}
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+    display: none;
+}
+
+

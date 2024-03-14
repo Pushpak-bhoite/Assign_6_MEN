@@ -1,0 +1,77 @@
+<aside id="sidebar">
+    <div class="d-flex align-items-center">
+        <button id="toggle-btn" type="button">
+            <i class="lni lni-grid-alt"></i>
+        </button>
+        <div class="sidebar-logo">
+            <a href="#">CodzSword</a>
+        </div>
+    </div>
+
+
+    <ul class="sidebar-nav">
+
+
+        <li class="sidebar-item  d-uId ">
+            <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#user"
+                aria-expanded="true" aria-controls="user">
+                <i class="liText fa-solid fa-user"></i>
+
+                <span>USERS</span>
+            </a>
+
+            <ul id="user" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <li class="sidebar-item">
+                    <a href="/dashboard" class="sidebar-link" id="blocked"> Active </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/dashboard" class="sidebar-link " id="un-blocked"> IN-ACTIVE</a>
+                </li>
+                <li class="sidebar-item">
+
+            </ul>
+        </li>
+
+
+        <li class="sidebar-item" id="productId">
+                <a href="/product" class="sidebar-link " >
+                    <i class=" fa-brands fa-product-hunt"></i>
+                    <span>Product</span>
+                </a>
+        </li>
+
+        <li class="sidebar-item " id="regionId">
+            <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#region"
+                aria-expanded="true" aria-controls="region">
+                <i class=" liText fa-solid fa-location-dot"></i>
+                <span class="liText">REGION</span>
+            </a>
+
+            <ul id="region" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">State </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link "> City</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="sidebar-item">
+            <a href="#" class="sidebar-link">
+                <i class="liText fa-solid fa-address-book"></i>
+                <span class="liText">CONTACT</span>
+            </a>
+        </li>
+
+
+    </ul>
+
+    <div class="sidebar-footer pb-5">
+        <a href="/logout" class="sidebar-link">
+            <i class="lni lni-exit" style="font-size: x-large;"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+</aside>

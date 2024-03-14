@@ -64,7 +64,7 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/register'
                 if (req.user.frole === "Admin") {
                     res.redirect('/dashboard')
                 } else {
-                    res.render('user');
+                    res.redirect('dashboard');
                 }
 
             } catch (error) {
@@ -84,7 +84,7 @@ app.get("/dashboard", isAuthenticated, async (req, res) => {
         res.render('dashboard', {
             Udata: UserData,
             Sdata: sessionData,
-            Pdata: ProductData
+            Pdata: ProductData,
         })
     } catch (error) {
         res.send('An error occured ==>> ' + error);
@@ -101,19 +101,6 @@ app.get("/logout", (req, res) => {
 });
 
 
-/*--------------------------------- PRODUCTS ROUT --------------------------------- */
-app.post("/addProduct", async (req, res) => {
-    try {
-        const newProduct = new Product(req.body);
-        await newProduct.save();
-
-        res.send("product added");
-    } catch (error) {
-        // Handle any errors that occur during registration
-        res.status(500).send("An error occurred during registration");
-    }
-
-});
 
 
 /*--------------------------------- ROUTS --------------------------------- */
@@ -136,9 +123,6 @@ app.get("/", async (req, res) => {
     res.render('index')
 })
 
-app.get("/product", async (req, res) => {
-    res.render('product')
-})
 
 //========================== CRAETE ==========================
 
@@ -179,41 +163,34 @@ app.post("/register", async (req, res) => {
 
 
 
-/*--------------------------------- CHANGE - STATE --------------------------------- */
-// app.post("/addProduct", async (req, res) => {
-//     console.log(req.body.pname);
-//   
-//     }
 
-// });
 
-// UPDATE
+//---------------------------------ACTIVE -NONACTIVE USERS ---------------------------------
 app.post("/stateChange/:id", async (req, res) => {
     try {
         const userId = req.params.id;
 
         // async function myFunc() {
 
-            console.log(req.body.state === "true")
+        console.log(req.body.state === "true")
 
 
-            if (req.body.state === "true") {
-                console.log("hello")
-                const updatedData = { state: false };
+        if (req.body.state === "true") {
+            console.log("hello")
+            const updatedData = { state: false };
 
-                const result = await User.findByIdAndUpdate({ _id: userId }, { $set: updatedData });
-                // return result;
-                res.redirect('/dashboard');
-
-            } else {
-                console.log(" jsdbvdsj  ")
-
-                const updatedData = { state: true };
-                const result = await User.findByIdAndUpdate({ _id: userId }, { $set: updatedData });
-                // return result
+            const result = await User.findByIdAndUpdate({ _id: userId }, { $set: updatedData });
+            // return result;
             res.redirect('/dashboard');
 
-            }
+        } else {
+            console.log(" jsdbvdsj  ")
+
+            const updatedData = { state: true };
+            const result = await User.findByIdAndUpdate({ _id: userId }, { $set: updatedData });
+            res.redirect('/dashboard');
+
+        }
         // }
 
         // const result = await myFunc();
@@ -233,7 +210,35 @@ app.post("/stateChange/:id", async (req, res) => {
 
 
 
+//---------------------------------PRODUCT ROUT ---------------------------------
+app.get("/product", isAuthenticated, async (req, res) => {
+    try {
+        const UserData = await User.find();
+        const ProductData = await Product.find();
+        // const PRefData = await Product.find().populate("65f0b05b3bae264704aa3746");
+        console.log(ProductData+"----------------");
+        res.render('product', {
+            Udata: UserData,
+            Sdata: sessionData,
+            Pdata: ProductData,
+        })
+    } catch (error) {
+        res.send('An error occured ==>> ' + error);
+    }
+})
 
+app.post("/product", async (req, res) => {
+    try {
+        const newProduct = new Product(req.body);
+        await newProduct.save();
+
+        res.send("product added");
+    } catch (error) {
+        // Handle any errors that occur during registration
+        res.status(500).send("An error occurred during registration");
+    }
+
+});
 
 
 app.listen(port, () => {

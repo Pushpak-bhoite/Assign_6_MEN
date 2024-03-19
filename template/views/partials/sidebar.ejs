@@ -4,58 +4,42 @@
             <i class="lni lni-grid-alt"></i>
         </button>
         <div class="sidebar-logo">
-            <a href="#">CodzSword</a>
+            <a href="#"><%= Sdata.ffname %></a>
         </div>
     </div>
 
 
     <ul class="sidebar-nav">
 
-
-        <li class="sidebar-item  d-uId ">
-            <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#user"
-                aria-expanded="true" aria-controls="user">
+        <li class="sidebar-item  Role " id="productId">
+            <a href="/dashboard" class="sidebar-link ">
+                <i class="fa-solid fa-house"></i>
+                <span>HOME</span>
+            </a>
+        </li>
+       
+        <li class="sidebar-item  Role " id="productId">
+            <a href="/users" class="sidebar-link ">
                 <i class="liText fa-solid fa-user"></i>
-
                 <span>USERS</span>
             </a>
-
-            <ul id="user" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="/dashboard" class="sidebar-link" id="blocked"> Active </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="/dashboard" class="sidebar-link " id="un-blocked"> IN-ACTIVE</a>
-                </li>
-                <li class="sidebar-item">
-
-            </ul>
         </li>
-
 
         <li class="sidebar-item" id="productId">
-                <a href="/product" class="sidebar-link " >
-                    <i class=" fa-brands fa-product-hunt"></i>
-                    <span>Product</span>
-                </a>
-        </li>
-
-        <li class="sidebar-item " id="regionId">
-            <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#region"
-                aria-expanded="true" aria-controls="region">
-                <i class=" liText fa-solid fa-location-dot"></i>
-                <span class="liText">REGION</span>
+            <a href="/product" class="sidebar-link ">
+                <i class=" fa-brands fa-product-hunt"></i>
+                <span>Product</span>
             </a>
-
-            <ul id="region" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">State </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link "> City</a>
-                </li>
-            </ul>
         </li>
+
+        <li class="sidebar-item" id="regionId">
+            <a href="/region" class="sidebar-link">
+                <i class=" liText fa-solid fa-location-dot"></i>
+                <span>REGION</span>
+            </a>
+        </li>
+
+       
 
         <li class="sidebar-item">
             <a href="#" class="sidebar-link">

@@ -3,127 +3,130 @@
 
 <%- include('./partials/head') %>
 
-    <body >
+    <body>
         <% let dUser; %>
-        <% if (Sdata.frole === "Admin") { %>
-            <% dUser = "d-user"; %>
-        <% } %>
-        <div class="wrapper <%=dUser%>" id="targetUser">
+            <% if (Sdata.frole==="Admin" ) { %>
+                <% dUser="d-user" ; %>
+                    <% } %>
+                        <div class="wrapper <%=dUser%>" id="targetUser">
 
-            <%- include('./partials/sidebar.ejs')%>
+                            <%- include('./partials/sidebar.ejs')%>
 
-                <div class="main p-3">
+                                <div class="main p-3">
+                                    <%- include('./partials/header.ejs')%>
 
-                        <div id="productDash">
-                            <!-- Product list  -->
-                            <div class="row" id="productList">
-                                <!-- Product Form -->
-                                <%- include('./partials/AdminProductForm.ejs')%>
 
-                                    <!-- Table Element -->
-                                    <div class="border-0">
+                                        <div id="productDash">
+                                            <!-- Product list  -->
+                                            <div class="row" id="productList">
+                                                <!-- Product Form -->
+                                                <%- include('./partials/AdminProductForm.ejs')%>
 
-                                        <div class="card-body  bg-dark text-white">
-                                            <table class="table table-dark">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">UserId</th>
-                                                        <th scope="col">Title</th>
-                                                        <th scope="col">Quantity</th>
-                                                        <th scope="col">Price</th>
-                                                        <th scope="col">Operations</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <!-- need to add users info via mongo db -->
+                                                    <!-- Table Element -->
+                                                    <div class="border-0">
 
-                                                    <% console.log(locals.Pdata)%>
-                                                    <% if(locals.Pdata){ Pdata.forEach((i)=>{ %>
-                                                        <tr>
-                                                            <td>
-                                                                <%=i.userId%>
-                                                            </td>
-                                                            <td>
-                                                                <%=i.pname%>
-                                                            </td>
-                                                            <td>
-                                                                <%=i.pquantity%>
-                                                            </td>
-                                                            <td>
-                                                                <%=i.pprice%>
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-warning">Edit</button>
-                                                                <button type="button" class="btn btn-danger">Delete</button>
-                                                            </td>
-                                                        </tr>
-                                                        <% }) }%>
-                                                </tbody>
-                                            </table>
+                                                        <div class="card-body  bg-dark text-white">
+                                                            <table class="table table-dark">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">UserId</th>
+                                                                        <th scope="col">Title</th>
+                                                                        <th scope="col">Quantity</th>
+                                                                        <th scope="col">Price</th>
+                                                                        <th scope="col">Operations</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <!-- need to add users info via mongo db -->
+
+                                                                        <% if(locals.Pdata){ Pdata.forEach((i)=>{ %>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <%=i.userId%>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%=i.pname%>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%=i.pquantity%>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%=i.pprice%>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-warning">Edit</button>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-danger">Delete</button>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <% }) }%>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                            </div>
                                         </div>
-                                    </div>
-                            </div>
+
+                                </div>
                         </div>
 
-                </div>
-        </div>
 
 
+                        <!-- Bootsatrp -->
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                            crossorigin="anonymous"></script>
 
-        <!-- Bootsatrp -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
+                        <!-- jquery -->
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+                            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+                            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-        <!-- jquery -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                        <script>
 
-        <script>
+                            $(document).ready(function () {
 
-            $(document).ready(function () {
+                                const hamburger = $("#toggle-btn");
 
-                const hamburger = $("#toggle-btn");
+                                $("#toggle-btn").click(function () {
+                                    $("#sidebar").toggleClass("expand");
+                                });
 
-                $("#toggle-btn").click(function () {
-                    $("#sidebar").toggleClass("expand");
-                });
+                                // $('#UserDash').hide();
+                                // $('#productDash').hide();
+                                $('#regionDash').hide();
+                                $('.in-active').hide();
 
-                // $('#UserDash').hide();
-                // $('#productDash').hide();
-                $('#regionDash').hide();
-                $('.in-active').hide();
+                                $("#blocked").click(function () {
+                                    $('.active').show();
+                                    $('.in-active').hide();
+                                    $('#regionDash').hide();
+                                    $('#productDash').hide();
+                                });
 
-                $("#blocked").click(function () {
-                    $('.active').show();
-                    $('.in-active').hide();
-                    $('#regionDash').hide();
-                    $('#productDash').hide();
-                });
+                                $("#un-blocked").click(function () {
+                                    $('.active').hide();
+                                    $('.in-active').show();
+                                    $('#regionDash').hide();
+                                    $('#productDash').hide();
+                                });
+                                $("#regionId").click(function () {
+                                    $('.active').hide();
+                                    $('.in-active').hide();
+                                    $('#regionDash').show();
+                                    $('#productDash').hide();
+                                });
+                                $("#productId").click(function () {
+                                    $('.active').hide();
+                                    $('.in-active').hide();
+                                    $('#regionDash').hide();
+                                    $('#productDash').show();
+                                });
 
-                $("#un-blocked").click(function () {
-                    $('.active').hide();
-                    $('.in-active').show();
-                    $('#regionDash').hide();
-                    $('#productDash').hide();
-                });
-                $("#regionId").click(function () {
-                    $('.active').hide();
-                    $('.in-active').hide();
-                    $('#regionDash').show();
-                    $('#productDash').hide();
-                });
-                $("#productId").click(function () {
-                    $('.active').hide();
-                    $('.in-active').hide();
-                    $('#regionDash').hide();
-                    $('#productDash').show();
-                });
+                            });
 
-            });
-
-        </script>
+                        </script>
 
     </body>
 

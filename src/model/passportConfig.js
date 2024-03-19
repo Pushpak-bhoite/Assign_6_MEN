@@ -1,10 +1,9 @@
 const { User } = require("./schema");
 const passport = require('passport')
 const LocalStrategy = require("passport-local").Strategy;
-
+const bcrypt = require('bcrypt')
 
 exports.initializingPassport = (passport) => {
-
 
     passport.use(new LocalStrategy({ usernameField: "fmail", passwordField: 'fpass', passReqToCallback: true }, async (req, fmail, fpass, done) => {
 
@@ -13,19 +12,16 @@ exports.initializingPassport = (passport) => {
             const user = await User.findOne({ fmail: fmail })
 
             if (!user) {
-                console.log(user + "Not authenticated")
+                req.flash('message',' wrong Email ') ;
                 return done(null, false, { message: "wrong credentials" });
             }
 
-            if (user.fpass !== fpass) {
-                console.log(user + "Wrong password")
+            const isMatch = await bcrypt.compare(fpass ,user.fpass)
+
+            if (!isMatch) {
+                req.flash('message',' Incorrect password') ;
                 return done(null, false, { message: "Incorrect password" });
             }
-
-            // if (req.body.frole !== user.frole) {
-            //     console.log("Invalid Role");
-            //     return done(null, false, { message: "Invalid Role" });
-            // }
 
             return done(null, user);
         } catch (error) {

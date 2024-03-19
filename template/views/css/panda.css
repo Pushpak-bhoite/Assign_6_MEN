@@ -4,9 +4,11 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
 body {
   background-color: #8e70e6;
 }
+
 .container {
   height: 31.25em;
   width: 31.25em;
@@ -15,6 +17,7 @@ body {
   top: 50%;
   left: 50%;
 }
+
 form {
   width: 23.75em;
   height: 18.75em;
@@ -29,12 +32,14 @@ form {
   justify-content: center;
   border-radius: 0.5em;
 }
+
 form label {
   display: block;
   margin-bottom: 0.2em;
   font-weight: 600;
   color: #2e0d30;
 }
+
 form input {
   font-size: 0.95em;
   font-weight: 400;
@@ -44,6 +49,7 @@ form input {
   border-bottom: 0.12em solid #3f3554;
   outline: none;
 }
+
 form input:focus {
   border-color: #71c418;
 }
@@ -55,6 +61,7 @@ form input::placeholder {
 form input:not(:last-child) {
   margin-bottom: 0.9em;
 }
+
 form button {
   font-size: 0.95em;
   padding: 0.8em 0;
@@ -70,6 +77,7 @@ form button {
   letter-spacing: 0.15em;
   margin-top: 0.8em;
 }
+
 .panda-face {
   height: 7.5em;
   width: 8.4em;
@@ -82,6 +90,7 @@ form button {
   left: 0;
   right: 0;
 }
+
 .ear-l,
 .ear-r {
   background-color: #3f3554;
@@ -92,14 +101,17 @@ form button {
   top: 1.75em;
   position: absolute;
 }
+
 .ear-l {
   transform: rotate(-38deg);
   left: 10.75em;
 }
+
 .ear-r {
   transform: rotate(38deg);
   right: 10.75em;
 }
+
 .blush-l,
 .blush-r {
   background-color: #ff8bb1;
@@ -109,14 +121,17 @@ form button {
   position: absolute;
   top: 4em;
 }
+
 .blush-l {
   transform: rotate(25deg);
   left: 1em;
 }
+
 .blush-r {
   transform: rotate(-25deg);
   right: 1em;
 }
+
 .eye-l,
 .eye-r {
   background-color: #3f3554;
@@ -126,14 +141,17 @@ form button {
   position: absolute;
   top: 2.18em;
 }
+
 .eye-l {
   left: 1.37em;
   transform: rotate(-20deg);
 }
+
 .eye-r {
   right: 1.37em;
   transform: rotate(20deg);
 }
+
 .eyeball-l,
 .eyeball-r {
   height: 0.6em;
@@ -145,12 +163,15 @@ form button {
   top: 0.6em;
   transition: 1s all;
 }
+
 .eyeball-l {
   transform: rotate(20deg);
 }
+
 .eyeball-r {
   transform: rotate(-20deg);
 }
+
 .nose {
   height: 1em;
   width: 1em;
@@ -163,6 +184,7 @@ form button {
   border-radius: 1.2em 0 0 0.25em;
   transform: rotate(45deg);
 }
+
 .nose:before {
   content: "";
   position: absolute;
@@ -173,6 +195,7 @@ form button {
   top: 0.75em;
   left: 1em;
 }
+
 .mouth,
 .mouth:before {
   height: 0.75em;
@@ -182,15 +205,18 @@ form button {
   border-radius: 50%;
   box-shadow: 0 0.18em #3f3554;
 }
+
 .mouth {
   top: 5.31em;
   left: 3.12em;
 }
+
 .mouth:before {
   content: "";
   position: absolute;
   left: 0.87em;
 }
+
 .hand-l,
 .hand-r {
   background-color: #3f3554;
@@ -202,12 +228,15 @@ form button {
   position: absolute;
   top: 8.4em;
 }
+
 .hand-l {
   left: 7.5em;
 }
+
 .hand-r {
   right: 7.5em;
 }
+
 .paw-l,
 .paw-r {
   background-color: #3f3554;
@@ -218,12 +247,15 @@ form button {
   position: absolute;
   top: 26.56em;
 }
+
 .paw-l {
   left: 10em;
 }
+
 .paw-r {
   right: 10em;
 }
+
 .paw-l:before,
 .paw-r:before {
   position: absolute;
@@ -235,6 +267,7 @@ form button {
   left: 0.55em;
   border-radius: 1.56em 1.56em 0.6em 0.6em;
 }
+
 .paw-l:after,
 .paw-r:after {
   position: absolute;
@@ -247,8 +280,28 @@ form button {
   left: 1.12em;
   box-shadow: 0.87em 0.37em #ffffff, -0.87em 0.37em #ffffff;
 }
+
 @media screen and (max-width: 500px) {
   .container {
     font-size: 14px;
   }
 }
+
+/* ****************dispaly error message **************************** */
+
+
+
+#errId:not(.errMsg) .showErr {
+  display: block;
+  text-align: center; /* Center the text horizontally */
+  color: darkred; /*Set text color to red */
+  /* background-color: white; Set background color to white */
+ padding: 10px; /* Add padding for better appearance */
+}
+
+/* .errStyle {
+  text-align: center;
+   color: red; 
+   background-color: white;
+  padding: 10px; 
+} */

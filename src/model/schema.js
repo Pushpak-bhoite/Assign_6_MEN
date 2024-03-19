@@ -41,6 +41,10 @@ const registrationSchema = new mongoose.Schema({
     state: {
         type: Boolean,
         default: true // Default value can be true or false depending on your requirement
+    }, 
+    resetToken:{
+        type:String,
+        default:null,
     }
 
 }, { versionKey: false });
@@ -66,6 +70,29 @@ const productSchema = new mongoose.Schema({
     }
 },{ versionKey: false });
 
+
+// REGION SCHEMA
+const regionSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Assuming there's a User model associated with this
+        required: true
+    },
+    regionCountry: {
+        type: String,
+        required: true
+    },
+    regionState: {
+        type: String,
+        required: true
+    },
+    regionCity: {
+        type: String,
+        required: true
+    }
+}, { versionKey: false });
+
+const Region = mongoose.model('Region', regionSchema);
 const User = mongoose.model('Registration', registrationSchema);
 const Product = mongoose.model('Product', productSchema);
 
@@ -73,6 +100,7 @@ const Product = mongoose.model('Product', productSchema);
 
 module.exports = {
     User,
-    Product
+    Product,
+    Region
 };
 

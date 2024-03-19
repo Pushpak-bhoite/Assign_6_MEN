@@ -1,1 +1,146 @@
-<%- include('./partials/AdminProductForm.ejs') %>
+<nav class="navbar navbar-expand px-3 border-bottom">
+    <button class="btn" id="sidebar-toggle" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="d-flex mx-auto w-100 justify-content-center align-item-center ms-5">
+        <% if(tUser.role==='admin' ) { %>
+            <h4 class="d-flex justify-content-center align-item-center fs-4" style="color: red;"><strong>Admin
+                    Dashboard</strong></h4>
+            <% } else { %>
+                <h4 class="d-flex justify-content-center align-item-center fs-4" style="color: green;"><strong>User
+                        Dashboard</strong></h4>
+                <% } %>
+    </div>
+    <div class="navbar-collapse navbar">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                    <img src="./img/user.png" class="avatar img-fluid rounded" alt="">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item profile-link" href="#">Profile</a>
+                    <a class="dropdown-item add-user">Add User</a>
+                    <a href="/logout" class="dropdown-item">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- Button trigger modal for User Profile -->
+<button type="button" class="btn btn-primary d-none" id="profileModalTrigger" data-bs-toggle="modal"
+    data-bs-target="#exampleModalProfile">
+    Launch profile modal
+</button>
+<!-- Modal for User Profile -->
+<div class="modal fade" id="exampleModalProfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><strong>User Profile</strong></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="firstname"><strong>First Name:&nbsp;</strong>
+                    <%= tUser.firstname %>
+                </label><br>
+                <label for="lastname"><strong>Last Name:&nbsp;</strong>
+                    <%= tUser.lastname %>
+                </label><br>
+                <label for="email"><strong>Email:&nbsp;</strong>
+                    <%= tUser.email %>
+                </label><br>
+                <label for="mobile"><strong>Mobile:&nbsp;</strong>
+                    <%= tUser.mobile %>
+                </label><br>
+                <label for="gender"><strong>Gender:&nbsp;</strong>
+                    <%= tUser.gender %>
+                </label><br>
+                <label for="role"><strong>Role:&nbsp;</strong>
+                    <%= tUser.role %>
+                </label><br>
+                <label for="status"><strong>Status:&nbsp;</strong>
+                    <% if (tUser.state===true) { %>
+                        Active
+                        <% } else { %>
+                            Inactive
+                            <% } %>
+                </label><br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal for Add User -->
+<button type="button" class="btn btn-primary d-none" id="addUserTrigger" data-bs-toggle="modal"
+    data-bs-target="#exampleModalAddUser">
+    Launch Add User modal
+</button>
+<!-- Modal for Add User -->
+<div class="modal fade" id="exampleModalAddUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><strong>Add User</strong></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/addUserAdmin" method="post" class="p-4 rounded">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" name="firstname" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" name="lastname" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mobile" class="form-label">Mobile</label>
+                    <input type="text" name="mobile" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label d-block">Gender</label>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name="gender" class="form-check-input" value="male" checked>
+                        <label class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name="gender" class="form-check-input" value="female">
+                        <label class="form-check-label">Female</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPass" class="form-label">Confirm Password</label>
+                    <input type="password" name="confirmPass" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yzl3sExaG6sHQErzwejXE3ECuebR2vzwA=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $('.profile-link').click(function () {
+            $('#profileModalTrigger').click();
+        });
+        $('.add-user').click(function () {
+            $('#addUserTrigger').click();
+        });
+    });
+</script>
+
+
+
+
+
+

@@ -7,6 +7,7 @@
     padding: 0;
 }
 
+
 a {
     text-decoration: none;
 }
@@ -22,6 +23,7 @@ h1 {
 
 body {
     font-family: 'Poppins', sans-serif;
+
 }
 
 .wrapper {
@@ -150,13 +152,67 @@ a.sidebar-link:hover {
 
 
 /* This is logic for to show admin content and user content */
-#targetUser:not(.d-user) .d-uId{
+#targetUser:not(.d-user) .Role{
     display: none;
 }
 
-#sidebar:not(.expand) .sidebar-logo,
-#sidebar:not(.expand) a.sidebar-link span {
-    display: none;
+
+header {
+    /* position: fixed; */
+    /* right: 0;
+    top: 0;
+    left: 165px;
+    z-index: 100; */
+    margin-bottom:2rem ;
+    height: 8vh;
+    /* box-shadow: 0px  5px 5px 1px rgb(157, 152, 152); */
+    /* background: #fff; */
+    color: #fff;
+    background-color: rgb(33, 32, 32);
+    transition: left 300ms;
 }
+
+.header-content, .header-menu {
+    display: flex;
+    align-items: center;
+}
+
+.header-content {
+    justify-content: space-between;
+    padding: 0rem 1rem;
+}
+
+.header-content label:first-child span {
+    font-size: 1.3rem;
+}
+
+.header-content label {
+    cursor: pointer;
+}
+
+.header-menu {
+    justify-content: flex-end;
+    padding-top: .5rem;
+}
+
+.header-menu label,
+.header-menu .notify-icon {
+    margin-right: 2rem;
+    position: relative;
+}
+
+.header-menu label span,
+.notify-icon span:first-child {
+    font-size: 1.3rem;
+}
+
+
+
+
+
+
+
+
+
 
 

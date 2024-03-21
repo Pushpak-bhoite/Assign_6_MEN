@@ -7,20 +7,19 @@
 
         <% let dUser; %>
             <% if (Sdata.frole==="Admin" ) { %>
-                <% dUser="d-user" ; %>
+                <% dUser="d-user";%>
                     <% } %>
                         <div class="wrapper <%=dUser%> " id="targetUser">
-
                             <%- include('./partials/sidebar.ejs')%>
-
                                 <div class="main p-3">
                                     <!-- header  -->
+
+
                                     <%- include('./partials/header.ejs')%>
-
-                                        <!-- -----------ACTIVE IN-ACTIVE USERS ---------- -->
-
+                                    
+                                    
+                                    <!-- -----------ACTIVE IN-ACTIVE USERS ---------- -->
                                         <div id="UserDash " class=" Role  Uhide ">
-
                                             <div class="btn-group btn-group-lg mb-3" role="group"
                                                 aria-label="Basic example">
                                                 <button id="blocked" type="button" class="btn btn-success"> ACTIVE
@@ -28,15 +27,20 @@
                                                 <button id="un-blocked" type="button" class="btn btn-info"> IN-ACTIVE
                                                 </button>
                                             </div>
+                                            <div class="d-flex justify-content-end">
+                                                <div class="btn-group btn-group-lg mb-3" role="group" aria-label="Basic example">
+                                                    <a href="/addUser">
+                                                        <button id="blocked" type="button" class="btn btn-lg border border-success text-white">ADD USER</button>
+                                                    </a>
+                                                </div>
+                                            </div>
                                             <div>
                                                 <h1>Hello... <%= Sdata.ffname%>
                                                 </h1>
-
                                                 <table class="table table-dark active">
                                                     <div class="text-center active">
                                                         <h2> Active Users </h2>
                                                     </div>
-
                                                     <thead>
                                                         <tr>
                                                             <!-- <th scope="col">sr</th> -->
@@ -48,15 +52,12 @@
                                                             <th scope="col">Operations</th>
                                                             <th scope="col">State</th>
                                                         </tr>
-
                                                     </thead>
                                                     <tbody>
                                                         <%if(locals.Udata){ Udata.forEach(data=> {
-
                                                             if(data.frole === "Admin" || data.state === false )
                                                             { return; // Skip this iteration
                                                             }%>
-
                                                             <td>
                                                                 <%= data.ffname %>
                                                             </td>
@@ -72,7 +73,6 @@
                                                             <td>
                                                                 <%= data.fmail %>
                                                             </td>
-
                                                             <td>
                                                                 <button type="button" class="btn btn-warning"
                                                                     data-bs-toggle="modal"
@@ -93,9 +93,7 @@
                                                                     <button type="submit"
                                                                         class="btn btn-primary">block</button>
                                                                 </form>
-
                                                                 </tr>
-
                                                                 <!-- EDIT Modal -->
                                                                 <div class="modal fade" id="exampleModal<%=data._id %>"
                                                                     tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -110,32 +108,22 @@
                                                                                     data-bs-dismiss="modal"
                                                                                     aria-label="Close"></button>
                                                                             </div>
-
                                                                             <form method="post"
                                                                                 action="/editUser/<%= data._id %>?_method=PATCH"
                                                                                 class="ms-2">
-
                                                                                 <div class="modal-body">
                                                                                     <div class="mb-3">
-
-                                                                                        <%- include('./partials/editUserForm.ejs',{data:data})%>
-
+                                                                                        <%- include('./partials/EditProfile.ejs',{ i: Sdata })%>
                                                                                     </div>
-
                                                                                 </div>
-                                                                                
                                                                             </form>
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
                                                                 <% });%>
                                                                     <% } %>
                                                     </tbody>
                                                 </table>
-
-
                                                 <table class="table table-dark in-active ">
                                                     <div class="text-center in-active">
                                                         <h2> In-Active Users </h2>
@@ -216,7 +204,7 @@
                                                                                 data-bs-dismiss="modal"
                                                                                 aria-label="Close"></button>
                                                                         </div>
-                                                                        <%- include('./partials/editUserForm.ejs',{data:data})%>
+                                                                        <%- include('./partials/EditProfile.ejs',{data:data})%>
                                                                     </div>
                                                                 </div>
                                                             </div>

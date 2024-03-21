@@ -78,7 +78,9 @@
                                                             <!-- need to add users info via mongo db -->
                                                             <% if(locals.Rdata){ %>
                                                                 <%Rdata.forEach((i)=>{ %>
+
                                                                     <tr>
+                                                                        <% if(Sdata.frole ==='Admin' || (Sdata.frole ==='User' && Sdata._id.toString() == i.userId)){%>
                                                                         <td>
                                                                             <%=i.userId%>
                                                                         </td>
@@ -97,6 +99,7 @@
                                                                             <button type="button"
                                                                                 class="btn btn-danger">Delete</button>
                                                                         </td>
+                                                                        <% } %>
                                                                     </tr>
                                                                     <% }) %>
                                                                         <% } %>

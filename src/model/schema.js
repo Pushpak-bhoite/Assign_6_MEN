@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
+const express = require("express");
+const bodyParser = require('body-parser')
+const path = require("path");
+const Country = require('country-state-city').Country;
+const State = require('country-state-city').State;
+const port = 3000;
+const app = express();
+
 const registrationSchema = new mongoose.Schema({
     ffname: {
         type: String,
@@ -41,11 +49,15 @@ const registrationSchema = new mongoose.Schema({
     state: {
         type: Boolean,
         default: true // Default value can be true or false depending on your requirement
-    }, 
-    resetToken:{
-        type:String,
-        default:null,
-    }
+    },
+    resetToken: {
+        type: String,
+        default: null,
+    },
+    photo: {
+        type: String,
+        default: './img/boyPic.png'
+    },
 
 }, { versionKey: false });
 
@@ -68,7 +80,7 @@ const productSchema = new mongoose.Schema({
         required: true,
         min: 1
     }
-},{ versionKey: false });
+}, { versionKey: false });
 
 
 // REGION SCHEMA
@@ -92,15 +104,41 @@ const regionSchema = new mongoose.Schema({
     }
 }, { versionKey: false });
 
+
+const newschema = new mongoose.Schema({
+    User_id: {
+        type: String,
+        required: true,
+    },
+    State: {
+        type: String,
+        required: true,
+    },
+    State_code:{
+        type: Number,
+        required: true,
+    },
+    State_ISOcode:{
+        type: String,
+        required: true,
+    }
+})
+
+
+
 const Region = mongoose.model('Region', regionSchema);
 const User = mongoose.model('Registration', registrationSchema);
 const Product = mongoose.model('Product', productSchema);
+const StateSchema = mongoose.model("StateSchema", newschema);
 
-// module.exports = Registration;
+
+
+
 
 module.exports = {
     User,
     Product,
-    Region
+    Region,
+    StateSchema
 };
 

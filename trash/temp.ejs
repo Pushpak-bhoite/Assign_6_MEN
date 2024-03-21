@@ -1,145 +1,127 @@
-<nav class="navbar navbar-expand px-3 border-bottom">
-    <button class="btn" id="sidebar-toggle" type="button">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="d-flex mx-auto w-100 justify-content-center align-item-center ms-5">
-        <% if(tUser.role==='admin' ) { %>
-            <h4 class="d-flex justify-content-center align-item-center fs-4" style="color: red;"><strong>Admin
-                    Dashboard</strong></h4>
-            <% } else { %>
-                <h4 class="d-flex justify-content-center align-item-center fs-4" style="color: green;"><strong>User
-                        Dashboard</strong></h4>
-                <% } %>
-    </div>
-    <div class="navbar-collapse navbar">
-        <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-                <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                    <img src="./img/user.png" class="avatar img-fluid rounded" alt="">
-                </a>
-                <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item profile-link" href="#">Profile</a>
-                    <a class="dropdown-item add-user">Add User</a>
-                    <a href="/logout" class="dropdown-item">Logout</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
-<!-- Button trigger modal for User Profile -->
-<button type="button" class="btn btn-primary d-none" id="profileModalTrigger" data-bs-toggle="modal"
-    data-bs-target="#exampleModalProfile">
-    Launch profile modal
-</button>
-<!-- Modal for User Profile -->
-<div class="modal fade" id="exampleModalProfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel"><strong>User Profile</strong></h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <!-- lineicons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="/css/adminpanel.css">
+</head>
+<body>
+    <div class="wrapper d-flex">
+        <!-- sidebar  -->
+        <%-include("./partials/sidebar.ejs") %>
+            <div class="main p-3 ">
+                <!-- header  -->
+                <%-include('./partials/header.ejs')%>
+                    <main class="content px-3 py-2" id="main">
+                        <div class="reg" id="rlist">
+                            <div class="reg row justify-content-center ms-5 " id="rform ">
+                                <div class="col-lg-5 col-md-8 col-sm-10">
+                                    <!-- Message display -->
+                                    <% if (message!='' ) { %>
+                                        <div class="alert alert-warning alert-dismissible fade show col-md-12 mb-3 text-center"
+                                            role="alert">
+                                            <strong>
+                                                <%= message %>
+                                            </strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                    <% } %>
+                                        <form action="/Add_Region" method="post" class="">
+                                            <h1 class="text-center mb-3">region</h1>
+                                            <input type="hidden" name="User_id" value="<%= thisUser._id %>">
+                                            <label for="State" class="form-label mt-2">State</label>
+                                                <select class="form-select" id="State" name="State" required>
+                                                    <option value="" selected>Select State</option>
+                                                    <% indiaStates.forEach((state)=> { %>
+                                                        <option value="<%= state.isoCode %>">
+                                                            <%= state.name %>
+                                                        </option>
+                                                        <% }) %>
+                                                </select>
+                                            <label for="State_code" class="form-label mt-2">State_code</label>
+                                            <input type="number" class="form-control" id="State_code"
+                                                name="State_code" required>
+                                                <div class="d-flex ">
+                                                    <button type="submit" class="pagebtn btn btn-primary mt-3 "
+                                                        id="submit">Add Region</button>
+                                                </div>
+                                        </form>
+                                            <div class="table-responsive">
+                                                <table class="table table-responsive mb-5 pb-5 mt-5">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>State</th>
+                                                            <th>State_code</th>
+                                                            <th>Delete</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% rData.forEach((i)=>{ %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= i.State %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= i.State_code %>
+                                                                </td>
+                                                                <td>
+                                                                    <form action="/delete_region" method="post">
+                                                                        <input type="hidden" name="rid"
+                                                                            value="<%= i._id %>">
+                                                                        <button type="submit" id="delete"
+                                                                            class="btn  btn-danger"><i
+                                                                                class="bi bi-trash3"></i></button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                            <% }) %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                    <%-include('./partials/footer.ejs')%>
             </div>
-            <div class="modal-body">
-                <label for="firstname"><strong>First Name:&nbsp;</strong>
-                    <%= tUser.firstname %>
-                </label><br>
-                <label for="lastname"><strong>Last Name:&nbsp;</strong>
-                    <%= tUser.lastname %>
-                </label><br>
-                <label for="email"><strong>Email:&nbsp;</strong>
-                    <%= tUser.email %>
-                </label><br>
-                <label for="mobile"><strong>Mobile:&nbsp;</strong>
-                    <%= tUser.mobile %>
-                </label><br>
-                <label for="gender"><strong>Gender:&nbsp;</strong>
-                    <%= tUser.gender %>
-                </label><br>
-                <label for="role"><strong>Role:&nbsp;</strong>
-                    <%= tUser.role %>
-                </label><br>
-                <label for="status"><strong>Status:&nbsp;</strong>
-                    <% if (tUser.state===true) { %>
-                        Active
-                        <% } else { %>
-                            Inactive
-                            <% } %>
-                </label><br>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
     </div>
-</div>
-<!-- Button trigger modal for Add User -->
-<button type="button" class="btn btn-primary d-none" id="addUserTrigger" data-bs-toggle="modal"
-    data-bs-target="#exampleModalAddUser">
-    Launch Add User modal
-</button>
-<!-- Modal for Add User -->
-<div class="modal fade" id="exampleModalAddUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel"><strong>Add User</strong></h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="/addUserAdmin" method="post" class="p-4 rounded">
-                <div class="mb-3">
-                    <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" name="firstname" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="lastName" class="form-label">Last Name</label>
-                    <input type="text" name="lastname" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="mobile" class="form-label">Mobile</label>
-                    <input type="text" name="mobile" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label d-block">Gender</label>
-                    <div class="form-check form-check-inline">
-                        <input type="radio" name="gender" class="form-check-input" value="male" checked>
-                        <label class="form-check-label">Male</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input type="radio" name="gender" class="form-check-input" value="female">
-                        <label class="form-check-label">Female</label>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="confirmPass" class="form-label">Confirm Password</label>
-                    <input type="password" name="confirmPass" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Register</button>
-            </form>
-        </div>
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yzl3sExaG6sHQErzwejXE3ECuebR2vzwA=" crossorigin="anonymous"></script>
-<script>
-    $(document).ready(function () {
-        $('.profile-link').click(function () {
-            $('#profileModalTrigger').click();
+    <script>
+        $(document).ready(function () {
+            $("#sidebar").toggleClass("expand");
+            const hamburger = $("#toggle-btn");
+            $("#toggle-btn").click(function () {
+                $("#sidebar").toggleClass("expand");
+            });
+            let table = $('.table').DataTable({
+                "aaSorting": [],
+                paging: false,
+                responsive: true,
+                stateSave: true,
+                ordering: false,
+            });
         });
-        $('.add-user').click(function () {
-            $('#addUserTrigger').click();
-        });
-    });
-</script>
-
-
+    </script>
+</body>
+</html>
 
 
 

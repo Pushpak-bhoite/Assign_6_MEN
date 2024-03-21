@@ -1,5 +1,5 @@
 <!-- header  -->
-<header style="width:90vw;" >
+<header style="width:auto; height: 4rem;">
     <div class="header-content">
         <label for="menu-toggle">
             <span class="las la-bars"></span>
@@ -7,15 +7,53 @@
 
         <div class="header-menu">
 
-            <div class="notify-icon">
-                <a href="/logout"><span style="color: rgb(252, 244, 244);">Logout</span></a>
+            <div class="navbar-collapse navbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a href="#" data-bs-toggle="dropdown" class="nav-icon ">
+                            <img src="..\\uploads\\<%=Sdata._id.toString()%>\\<%=Sdata.photo%>"
+                                height="45vh" width="45vh" class="rounded-circle">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a type="button" class="btn " data-bs-toggle="modal"
+                                data-bs-target="#exampleModal<%=Sdata._id %>">
+                                Profile
+                            </a>
+                            <a href="/logout" class="dropdown-item">Logout</a>
+                        </div>
+                        <!-- EDIT Modal -->
+                        <div class="modal fade" id="exampleModal<%=Sdata._id %>" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content bg-dark ">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">User Profile
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
 
-                <img src="./img/boyPic.png" height="40vh">
+                                    <% if (locals.Udata) { 
+                                        Udata.forEach((i) => {
+                                            if (i._id.toString() === Sdata._id.toString()) { %>
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <%- include('./EditProfile.ejs',{i:i}) %>
+                                                        <% console.log(i+"ooooooooooooooooo") %>
+                                                    </div>
+                                                </div>
+                                            <% }
+                                        });
+                                    } %>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
             </div>
 
         </div>
     </div>
 </header>
-
-
-<!-- style="color: rgb(22, 20, 20);" -->

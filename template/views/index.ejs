@@ -42,7 +42,7 @@
   </div>
 
   <div class=" container d-flex justify-content-center">
-    <form class="w-50" action="/register" method="post">
+    <form class="w-50" action="/register" enctype="multipart/form-data" method="post">
       <div class="mb-3">
         <input name="ffname" type="text" class="form-control reg-form" placeholder="First Name" * id="fname">
       </div>
@@ -72,6 +72,10 @@
       </div>
       <div class="mb-3">
         <input name="fcpass" type="password" class="form-control reg-form" placeholder="Confirm Password" id="fcpassid">
+      </div>
+      <div class="mb-3">
+        <label for="photo" class="form-label">Upload Photo</label>
+        <input type="file" name="profilePic" class="form-control reg-form" multiple id="photo"/>
       </div>
 
       <button type="submit" class="btn btn-primary form-control">Register</button>

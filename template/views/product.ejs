@@ -38,9 +38,11 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <!-- need to add users info via mongo db -->
-
-                                                                        <% if(locals.Pdata){ Pdata.forEach((i)=>{ %>
+                                                                 
+                                                                    <% if(locals.Pdata){ Pdata.forEach((i)=>{ %>
+                                                                        <% if(Sdata.frole ==='Admin' || (Sdata.frole ==='User' && Sdata._id.toString() == i.userId)){%>
                                                                             <tr>
+
                                                                                 <td>
                                                                                     <%=i.userId%>
                                                                                 </td>
@@ -60,7 +62,10 @@
                                                                                         class="btn btn-danger">Delete</button>
                                                                                 </td>
                                                                             </tr>
-                                                                            <% }) }%>
+                                                                            <% }%>
+
+                                                                         
+                                                                                <% }) }%>
                                                                 </tbody>
                                                             </table>
                                                         </div>

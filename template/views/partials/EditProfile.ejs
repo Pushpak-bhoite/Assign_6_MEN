@@ -1,0 +1,51 @@
+<form action="/editUser" method="post" enctype="multipart/form-data" class="ms-2 bg-dark text-white">
+    <div class="modal-body">
+
+        <div class="mb-3">
+            <input name="_id" type="hidden" class="form-control reg-form bg-dark text-white"
+                value="<%=i._id.toString()%>" id="fname">
+        </div>
+        
+        <div class="mb-3">
+            <input name="ffname" type="text" class="form-control reg-form bg-dark text-white"
+                value="<%= i.ffname %>" id="fname">
+        </div>
+        <div class="mb-3">
+            <input name="flname" type="text" class="form-control reg-form bg-dark text-white"
+                value="<%= i.flname %>" id="lname">
+        </div>
+        <div class="mb-3">
+            <input name="fphone" type="tel" class="form-control reg-form bg-dark text-white" id="exampleInputEmail1"
+                value="<%= i.fphone %>">
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-white">Gender</label>
+            <input class="form-check-input text-dark" type="radio" name="fgender" id="male" value="male"
+                <%=i.fgender==='male' ? 'checked' : '' %>>
+            <label class="form-check-label text-white" for="male">Male</label>
+            <input class="form-check-input text-dark" type="radio" name="fgender" id="female" value="female"
+                <%=i.fgender==='female' ? 'checked' : '' %>>
+            <label class="form-check-label text-white" for="female">Female</label>
+        </div>
+        <div class="mb-3">
+            <input name="fmail" type="email" class="form-control reg-form bg-dark text-white" id="exampleInputEmail1"
+                value="<%= i.fmail %>">
+        </div>
+
+        <div class="mb-3">
+            <label >Profile Image :</label>
+            <img src="..\\uploads\\<%=Sdata._id.toString()%>\\<%=Sdata.photo%>" style="height:100px;width:100px;"/>
+            <div>
+                <input type="file" class="form-control bg-dark text-white" name="profilePic" accept="image/png, image/gif, image/jpeg, image/jpg"/>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <!-- <input type="hidden" name="_method" value="PATCH"> -->
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+
+</form>

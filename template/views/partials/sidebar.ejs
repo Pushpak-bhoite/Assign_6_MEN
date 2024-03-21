@@ -11,7 +11,7 @@
 
     <ul class="sidebar-nav">
 
-        <li class="sidebar-item  Role " id="productId">
+        <li class="sidebar-item   " id="productId">
             <a href="/dashboard" class="sidebar-link ">
                 <i class="fa-solid fa-house"></i>
                 <span>HOME</span>
@@ -32,14 +32,25 @@
             </a>
         </li>
 
-        <li class="sidebar-item" id="regionId">
-            <a href="/region" class="sidebar-link">
+        
+
+        <li class="sidebar-item " id="regionId">
+            <a href="/region" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#region"
+                aria-expanded="true" aria-controls="region">
                 <i class=" liText fa-solid fa-location-dot"></i>
-                <span>REGION</span>
+                <span class="liText">REGION</span>
             </a>
+
+            <ul id="region" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <li class="sidebar-item">
+                    <a href="/states" class="sidebar-link">State </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link "> City</a>
+                </li>
+            </ul>
         </li>
 
-       
 
         <li class="sidebar-item">
             <a href="#" class="sidebar-link">

@@ -1,0 +1,97 @@
+<form method="post" action="/editUser/<%= Sdata._id %>?_method=PATCH" enctype="multipart/form-data" class="ms-2 bg-dark text-white">
+
+  <div class="modal-body">
+      <div class="mb-3">
+          <input name="ffname" type="text" class="form-control reg-form bg-dark text-white"
+              value="<%= Sdata.ffname %>" id="fname">
+      </div>
+      <div class="mb-3">
+          <input name="flname" type="text" class="form-control reg-form bg-dark text-white"
+              value="<%= Sdata.flname %>" id="lname">
+      </div>
+      <div class="mb-3">
+          <input name="fphone" type="tel" class="form-control reg-form bg-dark text-white" id="exampleInputEmail1"
+              value="<%= Sdata.fphone %>">
+      </div>
+      <div class="mb-3">
+          <label class="form-label text-white">Gender</label>
+          <input class="form-check-input text-dark" type="radio" name="fgender" id="male" value="male"
+              <%=Sdata.fgender==='male' ? 'checked' : '' %>>
+          <label class="form-check-label text-white" for="male">Male</label>
+          <input class="form-check-input text-dark" type="radio" name="fgender" id="female" value="female"
+              <%=Sdata.fgender==='female' ? 'checked' : '' %>>
+          <label class="form-check-label text-white" for="female">Female</label>
+      </div>
+      <div class="mb-3">
+          <input name="fmail" type="email" class="form-control reg-form bg-dark text-white" id="exampleInputEmail1"
+              value="<%= Sdata.fmail %>">
+      </div>
+
+      <div class="mb-3">
+              <input type="file" name="profilePic" multiple />
+      </div>
+
+  </div>
+
+  <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <!-- <input type="hidden" name="_method" value="PATCH"> -->
+      <button type="submit" class="btn btn-primary">Save changes</button>
+  </div>
+
+</form>
+
+
+
+
+
+
+
+app.patch("/editUser/:id", async (req, res ,next) => {
+  try {
+        // ----------------------------Upload Img--------------------------
+        const form = new formidable.IncomingForm();
+        form.parse(req, function (err, fields, files) {
+    
+            if (err) {
+                console.log(err);
+                return res.status(500).send(' intenal server Error ')
+            }
+    
+            // Check if files were uploaded
+            if (!files || !files.profilePic || !files.profilePic.length) {
+                return res.status(400).send('No files uploaded or incorrect field name');
+            }
+    
+            let oldPath = files.profilePic[0].filepath;
+            let newPath = path.join(__dirname, '../template/views/uploads') + `/` + files.profilePic[0].originalFilename
+            console.log(newPath + "-------------")
+            let rawData = fs.readFileSync(oldPath)
+    
+            fs.writeFile(newPath, rawData, function (err) {
+                if (err) console.log(err + "******************")
+                return res.send("Successfully uploaded")
+            })
+
+            // res.redirect('/users');
+        })
+
+
+
+      const userId = req.params.id;
+      const newData = req.body; // Assuming the updated data is sent as 'data'
+      const result = await User.findByIdAndUpdate({ _id: userId }, { $set: newData }, { new: true });
+      console.log(result)
+
+      if (!result) {
+          return res.status(404).send("User not found");
+      }
+    
+     
+
+      // res.redirect("/dashboard"); // Redirect to the homepage or any other appropriate page after successful update
+
+  } catch (error) {
+      res.status(500).send(error + "This is error");
+  }
+});

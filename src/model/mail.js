@@ -11,9 +11,9 @@ const nodemailer = require('nodemailer');
 // });
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 465,
-    debug: true,
-    secure: true,
+    // port: 465,
+    // debug: true,
+    // secure: true,
     auth: {
         user: 'pushpakbhoitephotos@gmail.com',
         pass: 'gjgb xulv oujv gtnm'

@@ -13,9 +13,8 @@
                                     <!-- header  -->
                                     <%- include('./partials/header.ejs')%>
 
-                                        <!-- ----------------------REGION--------------------- -->
+                                        <!-- ----------------------States--------------------- -->
 
-                                        <!-- ----------------------REGION-form--------------------- -->
                                         <div class="container-fluid">
                                             <div class="row justify-content-center">
                                                 <div
@@ -34,32 +33,30 @@
                                                         <% } %>
 
                                                             <h3 class="mb-3 text-center">Region</h3>
-
-                                                            <form action="/addState" method="post" class="">
-                                                                <h1 class="text-center mb-3">States</h1>
-
+                                                                
+                                                            <form action="/get_cities" method="post" class="">
+                                                                <h1 class="text-center mb-3">Cities</h1>
                                                                 <input type="hidden" name="User_id"
-                                                                    value="<%= Sdata._id.toString() %>">
+                                                                    value="<%= Sdata._id %>">
                                                                 <label for="State" class="form-label mt-2">State</label>
-                                                                <select class="form-select" id="State" name="State"
+                                                                <select class="form-select" id="State" name="state"
                                                                     required>
                                                                     <option value="" selected>Select State</option>
-
-                                                                    <% indiaStates.forEach((state)=> { %>
-                                                                        <option value="<%= state.isoCode %>">
-                                                                            <%=state.name %>
+                                                                    <% rData.forEach((state)=> { %>
+                                                                        <option value="<%= state.State_ISOcode %>">
+                                                                            <%= state.State %>
                                                                         </option>
                                                                         <% }) %>
-
                                                                 </select>
-                                                                <label for="State_code"
-                                                                    class="form-label mt-2">State_code</label>
-                                                                <input type="number" class="form-control"
-                                                                    id="State_code" name="State_code" required>
+                                                                <label for="City" class="form-label mt-2">City</label>
+                                                                <select class="form-select" id="City" name="City"
+                                                                    required>
+                                                                    <option value="" selected>Select City</option>
+                                                                </select>
                                                                 <div class="d-flex ">
                                                                     <button type="submit"
                                                                         class="pagebtn btn btn-primary mt-3 "
-                                                                        id="submit">Add Region</button>
+                                                                        id="submit"><i class="fa-solid fa-plus"></i> Add city</button>
                                                                 </div>
                                                             </form>
                                                 </div>
@@ -81,25 +78,25 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>State</th>
-                                                                <th>State_code</th>
+                                                                <th>City</th>
                                                                 <th>Delete</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <% rData.forEach((i)=>{ %>
+                                                            <% cityData.forEach((i)=>{ %>
                                                                 <tr>
                                                                     <td>
                                                                         <%= i.State %>
                                                                     </td>
                                                                     <td>
-                                                                        <%= i.State_code %>
+                                                                        <%= i.City_Name %>
                                                                     </td>
                                                                     <td>
-                                                                        <form action="/delete_state" method="post">
-                                                                            <input type="hidden" name="rid"
-                                                                                value="<%= i._id.toString() %>">
+                                                                        <form action="/deleteCity" method="post">
+                                                                            <input type="hidden" name="cid"
+                                                                                value="<%= i._id %>">
                                                                             <button type="submit" id="delete"
-                                                                                class="btn btn-lg border border-danger text-danger"><i class="fa-solid fa-trash-can fa-lg"></i></button>
+                                                                                class="btn  btn-danger"><i class="fa-solid fa-trash-can fa-lg"></i></button>
                                                                         </form>
                                                                     </td>
                                                                 </tr>
@@ -147,6 +144,26 @@
                                 $("#un-blocked").click(function () {
                                     $('.active').hide();
                                     $('.in-active').show();
+                                });
+
+                                $('#State').change(function () {
+                                    var state = $(this).val();
+                                    $.ajax({
+                                        method: 'GET',
+                                        url: '/city/get_cities',
+                                        data: { state: state },
+                                        success: function (response) {
+                                            $('#City').empty();
+                                            $('#City').append('<option value="" selected>Select City</option>');
+                                            response.forEach(function (city) {
+                                                // console.log(city.name)
+                                                $('#City').append('<option value="' + city.name + '">' + city.name + '</option>');
+                                            });
+                                        },
+                                        error: function (error) {
+                                            console.error("error in fetching the cities ", error);
+                                        }
+                                    });
                                 });
 
                             });

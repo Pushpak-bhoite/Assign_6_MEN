@@ -125,12 +125,27 @@ const newschema = new mongoose.Schema({
 })
 
 
+const newCities = new mongoose.Schema({
+    User_id: {
+        type: String,
+        required: true,
+    },
+    State:{
+        type: String,
+        required: true,
+    },
+    City_Name:{
+        type: String,
+        required: true,
+    }
+})
+
 
 const Region = mongoose.model('Region', regionSchema);
 const User = mongoose.model('Registration', registrationSchema);
 const Product = mongoose.model('Product', productSchema);
 const StateSchema = mongoose.model("StateSchema", newschema);
-
+const CitySchema = mongoose.model("city", newCities);
 
 
 
@@ -139,6 +154,6 @@ module.exports = {
     User,
     Product,
     Region,
-    StateSchema
-};
+    StateSchema,
+    CitySchema};
 

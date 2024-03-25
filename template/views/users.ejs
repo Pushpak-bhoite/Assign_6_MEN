@@ -30,7 +30,7 @@
                                             <div class="d-flex justify-content-end">
                                                 <div class="btn-group btn-group-lg mb-3" role="group" aria-label="Basic example">
                                                     <a href="/addUser">
-                                                        <button id="blocked" type="button" class="btn btn-lg border border-success text-white">ADD USER</button>
+                                                        <button id="blocked" type="button" class="btn btn-lg border border-success text-white"> <i class="fa-solid fa-plus fa-lg"></i> ADD USER</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -74,14 +74,14 @@
                                                                 <%= data.fmail %>
                                                             </td>
                                                             <td>
-                                                                <button type="button" class="btn btn-warning"
+                                                                <button type="button" class="btn border border-warning text-warning"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#exampleModal<%=data._id %>">
-                                                                    Editoo
+                                                                    <i class="fa-solid fa-pen-to-square fa-lg"></i> Edit 
                                                                 </button>
 
                                                                 <button type="button"
-                                                                    class="btn btn-danger">Delete</button>
+                                                                    class="btn border border-danger text-danger"><i class="fa-solid fa-trash-can"></i> Delete</button>
                                                             </td>
                                                             <td>
                                                                 <form method="post" action="/stateChange/<%=data._id%>"
@@ -91,7 +91,7 @@
                                                                     <input type="hidden" name="state"
                                                                         value='<%=data.state%>'>
                                                                     <button type="submit"
-                                                                        class="btn btn-primary">block</button>
+                                                                        class="btn btn-primary"> <i class="fa-solid fa-ban fa-lg" ></i> block</button>
                                                                 </form>
                                                                 </tr>
                                                                 <!-- EDIT Modal -->
@@ -108,15 +108,9 @@
                                                                                     data-bs-dismiss="modal"
                                                                                     aria-label="Close"></button>
                                                                             </div>
-                                                                            <form method="post"
-                                                                                action="/editUser/<%= data._id %>?_method=PATCH"
-                                                                                class="ms-2">
-                                                                                <div class="modal-body">
-                                                                                    <div class="mb-3">
-                                                                                        <%- include('./partials/EditProfile.ejs',{ i: Sdata })%>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </form>
+                                                                           
+                                                                                        <%- include('./partials/EditUsers.ejs',{ i: data})%>
+                                                                                  
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -166,14 +160,15 @@
                                                             </td>
 
                                                             <td>
-                                                                <button type="button" class="btn btn-warning"
+                                                                <button type="button" class="btn border-warning text-warning"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#exampleModal<%=data._id %>">
-                                                                    Editoo
+                                                                    <i class="fa-solid fa-pen-to-square fa-lg"></i> 
+                                                                    Edit
                                                                 </button>
 
                                                                 <button type="button"
-                                                                    class="btn btn-danger">Delete</button>
+                                                                    class="btn btn border-danger text-danger"><i class="fa-solid fa-trash-can"></i> Delete</button>
                                                             </td>
                                                             <td>
                                                                 <form method="post" action="/stateChange/<%=data._id%>"
@@ -181,14 +176,11 @@
                                                                     <input type="hidden" name="state"
                                                                         value='<%=data.state%>'>
                                                                     <button type="submit"
-                                                                        class="btn btn-primary">Un-block</button>
+                                                                        class="btn btn-primary"><i class="fa-solid fa-lock-open fa-lg"></i> Un-block</button>
                                                                 </form>
                                                             </td>
 
                                                             </tr>
-
-
-
 
                                                             <!-- EDIT IN-ACTIVE MOdal-->
                                                             <div class="modal fade " id="exampleModal<%=data._id %>"
@@ -204,7 +196,7 @@
                                                                                 data-bs-dismiss="modal"
                                                                                 aria-label="Close"></button>
                                                                         </div>
-                                                                        <%- include('./partials/EditProfile.ejs',{data:data})%>
+                                                                        <%- include('./partials/EditUsers.ejs',{i:data})%>
                                                                     </div>
                                                                 </div>
                                                             </div>

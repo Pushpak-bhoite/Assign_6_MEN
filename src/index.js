@@ -3,7 +3,7 @@ const app = express();
 
 const ejs = require('ejs')
 const mydb = require('./model/db')
-const { User, Product, Region ,StateSchema } = require('./model/schema') //now we are gonna use newTodo as an class
+const { User, Product, Region, StateSchema, CitySchema } = require('./model/schema') //now we are gonna use newTodo as an class
 const MethodOverride = require('method-override');
 const { initializingPassport, isAuthenticated } = require('./model/passportConfig');
 const LocalStrategy = require("passport-local").Strategy;
@@ -112,6 +112,7 @@ app.get("/register", async (req, res) => {
 
 app.get("/dashboard", isAuthenticated, async (req, res) => {
     try {
+
         const UserData = await User.find();
         const ProductData = await Product.find();
         // const PRefData = await Product.find().populate("65f0b05b3bae264704aa3746");
@@ -182,24 +183,25 @@ app.post('/register', async (req, res) => {
     }
 });
 
-
-// Edit profile route
-app.post("/editUser", async (req, res) => {
+//---------------------------------Edit Profile  ---------------------------------
+app.post("/editProfile", async (req, res) => {
     try {
         var form = new formidable.IncomingForm();
         let newpath;
         let oldPath;
         let result;
+        let user;
+        let userId;
         try {
             form.parse(req, async function (err, fields, files) {
                 oldPath = files.profilePic[0].filepath;
-                const userId = fields._id[0];
-                const user = await User.findById(userId);
+                userId = fields._id[0];
+                user = await User.findById(userId);
                 if (!user) {
                     return res.status(404).send("User not found");
                 }
                 if (files) {
-                    const result = await User.updateOne(
+                    result = await User.findByIdAndUpdate(
                         { _id: userId },
                         {
                             $set: {
@@ -210,7 +212,8 @@ app.post("/editUser", async (req, res) => {
                                 fmail: fields.fmail[0],
                                 photo: files.profilePic[0].originalFilename
                             }
-                        }
+                        },
+                        { new: true }
                     );
                     var folderpath = path.join(__dirname, '../template/views/uploads/' + userId);
                     if (!fs.existsSync(folderpath)) {
@@ -223,10 +226,15 @@ app.post("/editUser", async (req, res) => {
                             console.error(err);
                             return res.status(500).send('Internal Server Error');
                         }
+
+
                     });
+
+                    sessionData =  result;
+                    res.redirect("/dashboard");
+
                 }
             })
-            res.redirect("/dashboard");
 
         }
         catch (err) {
@@ -238,25 +246,6 @@ app.post("/editUser", async (req, res) => {
         return res.status(500).redirect('/register');
     }
 });
-
-
-
-
-app.get('/editUsers', async (req, res) => {
-    try {
-        const UserData = await User.find();
-        const ProductData = await Product.find();
-        // const PRefData = await Product.find().populate("65f0b05b3bae264704aa3746");
-        // console.log(PRefData);
-        res.render('editUsers', {
-            Udata: UserData,
-            Sdata: sessionData,
-            Pdata: ProductData,
-        })
-    } catch (error) {
-        res.send('An error occured ==>> ' + error);
-    }
-})
 
 //---------------------------------ACTIVE -NONACTIVE USERS ---------------------------------
 app.post("/stateChange/:id", async (req, res) => {
@@ -363,9 +352,9 @@ app.post('/reset', async (req, res) => {
             throw new Error('User not found');
         }
         const resetToken = crypto.randomBytes(20).toString('hex');
-        user.resetToken = resetToken;
-        req.session.resetToken = resetToken
-        req.session.fmail = fmail
+        user.resetToken = resetToken ;
+        req.session.resetToken = resetToken ;
+        req.session.fmail = fmail ; 
         user.resetTokenExpiration = Date.now() + 600000;
 
         console.log(resetToken + "\t" + user.resetToken + "\t" + req.session.resetToken + "\t" + req.session.fmail + "\t" + user.resetTokenExpiration)
@@ -413,11 +402,31 @@ app.post('/rsSuccess', async (req, res) => {
             throw new Error('Invalid or expired reset token');
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        user.Password = hashedPassword;
-        user.fpass = password;
+        // user.Password = hashedPassword;
+        user.fpass = hashedPassword;
         user.resetToken = null;
         user.resetTokenExpiration = null;
+        let temp  = user.fmail ; 
+        console.log("this is before updation ===> "+user );
         await user.save();
+
+        const mailOptions = {
+            from: 'pushpakbhoitephotos@gmail.com',
+            to: temp,
+            subject: 'Password Reset Request',
+            html: `<P> Dear sir/mam your password has been reset </p>`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                throw new Error('Failed to send email');
+            } else {
+                console.log('Email sent: ');
+                // res.redirect('/forget');
+                res.send("link sent on email")
+            }
+        });
 
         res.redirect('/');
     } catch (err) {
@@ -425,7 +434,6 @@ app.post('/rsSuccess', async (req, res) => {
         res.status(500).send('Internal Server Error in resetting the password');
     }
 });
-
 
 //--------------------------------- UPLOAD IMAGE ---------------------------------
 app.get('/upload', (req, res) => {
@@ -529,28 +537,25 @@ app.get('/states', async (req, res) => {
     }
 })
 
-
-
 app.post("/addState", async (req, res) => {
-    try{
-            if (req.isAuthenticated())
-            {
-                // const thisUser = req.user
-                let state_codes={'AD': 37,'AR': 12,'AS': 18,'BR': 10,'CG': 22,'DL': 7,'GA': 30,'GJ': 24,'HR': 6,'HP': 2,'JK': 1,'JH': 20,'KA': 29,'KL': 32,'LD': 31,'MP': 23,'MH': 27,'MN': 14,'ML': 17,'MZ': 15,'NL': 13,'OD': 21,'PY': 34,'PB': 3,'RJ': 8,'SK': 11,'TN': 33,'TS': 36,'TR': 16,'UP': 9,'UK': 5,'WB': 19}
-                if(state_codes[req.body.State]==req.body.State_code){
-                    const temp = State.getStateByCodeAndCountry(req.body.State,"IN");
-                    const Rdata = new StateSchema({ User_id:req.body.User_id, State:temp.name ,State_code:req.body.State_code,State_ISOcode:req.body.State})
-                    await Rdata.save();
-                    res.redirect('/states')
-                }
-                else{
-                    req.flash('message','invalid state code');
-                    res.redirect('/region')
-                }
+    try {
+        if (req.isAuthenticated()) {
+            // const thisUser = req.user
+            let state_codes = { 'AD': 37, 'AR': 12, 'AS': 18, 'BR': 10, 'CG': 22, 'DL': 7, 'GA': 30, 'GJ': 24, 'HR': 6, 'HP': 2, 'JK': 1, 'JH': 20, 'KA': 29, 'KL': 32, 'LD': 31, 'MP': 23, 'MH': 27, 'MN': 14, 'ML': 17, 'MZ': 15, 'NL': 13, 'OD': 21, 'PY': 34, 'PB': 3, 'RJ': 8, 'SK': 11, 'TN': 33, 'TS': 36, 'TR': 16, 'UP': 9, 'UK': 5, 'WB': 19 }
+            if (state_codes[req.body.State] == req.body.State_code) {
+                const temp = State.getStateByCodeAndCountry(req.body.State, "IN");
+                const Rdata = new StateSchema({ User_id: req.body.User_id, State: temp.name, State_code: req.body.State_code, State_ISOcode: req.body.State })
+                await Rdata.save();
+                res.redirect('/states')
             }
-            else{
-                res.redirect('/states');
+            else {
+                req.flash('message', 'invalid state code');
+                res.redirect('/states')
             }
+        }
+        else {
+            res.redirect('/states');
+        }
     }
     catch (e) {
         console.log(e);
@@ -558,7 +563,149 @@ app.post("/addState", async (req, res) => {
     }
 });
 
+app.post("/delete_state", async (req, res) => {
+    try {
+        await StateSchema.deleteOne({ _id: req.body.rid });
+        res.redirect('/states')
+    } catch (e) {
+        console.log(e);
+        res.send("internal server error to delete the state")
+    }
+})
 
+//--------------------------------- Cities ---------------------------------
+app.get('/cities', async (req, res) => {
+    
+    const message = req.flash('message');
+    req.flash('message', "")
+    try {
+        const UserData = await User.find();
+        if (req.isAuthenticated()) {
+            const rData = await StateSchema.find();
+            const cityData = await CitySchema.find()
+
+            res.render('City', {
+                Udata: UserData,
+                Sdata: sessionData,
+                rData: rData,
+                cityData: cityData,
+                message: message
+            })
+        }
+        else {
+            res.redirect('/City')
+        }
+
+    } catch (error) {
+        res.send('An error occured ==>> ' + error);
+    }
+})
+
+app.get('/city/get_cities', async (req, res) => {
+    try {
+        console.log(req.query.state)
+        const temp = City.getCitiesOfState("IN", req.query.state)
+
+        res.json(temp)
+    }
+    catch (e) {
+        console.log(e);
+        res.redirect('/')
+    }
+});
+
+// addding city data post req
+app.post('/get_cities', async (req, res) => {
+    try {
+        const temp = State.getStateByCodeAndCountry(req.body.state, "IN")
+        console.log(  req.body)
+        const c = new CitySchema({ User_id: req.body.User_id, State: temp.name, City_Name: req.body.City })
+        console.log(c + "-------------");
+
+        await c.save()
+        req.flash('message', 'City Saved SuccesFully')
+        res.redirect('/cities')
+    } catch (error) {
+        console.log(error);
+        req.flash('message', 'oops... Something went wrong ')
+        res.redirect('/cities')
+    }
+})
+
+// delete city
+app.post('/deleteCity',async(req,res)=>{
+    try {
+        await CitySchema.deleteOne({_id:req.body.cid})
+        req.flash('message','1 city deleted')
+        res.redirect('/city')
+    } catch (error) {
+        console.log(error);
+        res.redirect('/')
+    }
+})
+
+//--------------------------------- EditAllUser ---------------------------------
+app.post('/EditUsers', async (req, res) => {
+    try {
+        var form = new formidable.IncomingForm();
+        let newpath;
+        let oldPath;
+        let result;
+        let user;
+        let userId;
+        try {
+            form.parse(req, async function (err, fields, files) {
+                oldPath = files.profilePic[0].filepath;
+                userId = fields._id[0];
+                user = await User.findById(userId);
+                if (!user) {
+                    return res.status(404).send("User not found");
+                }
+                if (files) {
+                    result = await User.findByIdAndUpdate(
+                        { _id: userId },
+                        {
+                            $set: {
+                                ffname: fields.ffname[0],
+                                flname: fields.flname[0],
+                                fphone: fields.fphone[0],
+                                fgender: fields.fgender[0],
+                                fmail: fields.fmail[0],
+                                photo: files.profilePic[0].originalFilename
+                            }
+                        },
+                        { new: true }
+                    );
+                    var folderpath = path.join(__dirname, '../template/views/uploads/' + userId);
+                    if (!fs.existsSync(folderpath)) {
+                        fs.mkdirSync(path.join(__dirname, '../template/views/uploads/' + userId));
+                    }
+                    newpath = path.join(__dirname, '../template/views/uploads/' + userId + "/" + files.profilePic[0].originalFilename);
+                    // let  og_file_path = path.join(__dirname, '../template/views/uploads') + '/' + files.profilePic[0].originalFilename;
+                    fs.copyFile(oldPath, newpath, function (err) {
+                        if (err) {
+                            console.error(err);
+                            return res.status(500).send('Internal Server Error');
+                        }
+                    });
+
+                    // sessionData =  result;
+                    console.log(result)
+                    res.redirect("/users");
+
+                }
+            })
+
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+    catch (err) {
+        console.error(err);
+        return res.status(500).redirect('/register');
+    }
+})
 
 //--------------------------------- LISTEN ---------------------------------
 

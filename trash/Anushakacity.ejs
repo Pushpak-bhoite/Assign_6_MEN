@@ -44,48 +44,49 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                 aria-label="Close"></button>
                                         </div>
-                                    <% } %>
-                                        <form action="/Add_Region" method="post" class="">
-                                            <h1 class="text-center mb-3">region</h1>
-                                            <input type="hidden" name="User_id" value="<%= thisUser._id %>">
-                                            <label for="State" class="form-label mt-2">State</label>
-                                                <select class="form-select" id="State" name="State" required>
+                                        <% } %>
+                                            <form action="/get_cities" method="post" class="">
+                                                <h1 class="text-center mb-3">Cities</h1>
+                                                <input type="hidden" name="User_id" value="<%= thisUser._id %>">
+                                                <label for="State" class="form-label mt-2">State</label>
+                                                <select class="form-select" id="State" name="state" required>
                                                     <option value="" selected>Select State</option>
-                                                    <% indiaStates.forEach((state)=> { %>
-                                                        <option value="<%= state.isoCode %>">
-                                                            <%= state.name %>
+                                                    <% rData.forEach((state)=> { %>
+                                                        <option value="<%= state.State_ISOcode %>">
+                                                            <%= state.State %>
                                                         </option>
                                                         <% }) %>
                                                 </select>
-                                            <label for="State_code" class="form-label mt-2">State_code</label>
-                                            <input type="number" class="form-control" id="State_code"
-                                                name="State_code" required>
+                                                <label for="City" class="form-label mt-2">City</label>
+                                                <select class="form-select" id="City" name="City" required>
+                                                    <option value="" selected>Select City  </option>
+                                                </select>
                                                 <div class="d-flex ">
                                                     <button type="submit" class="pagebtn btn btn-primary mt-3 "
-                                                        id="submit">Add Region</button>
+                                                        id="submit">Add city</button>
                                                 </div>
-                                        </form>
+                                            </form>
                                             <div class="table-responsive">
                                                 <table class="table table-responsive mb-5 pb-5 mt-5">
                                                     <thead>
                                                         <tr>
                                                             <th>State</th>
-                                                            <th>State_code</th>
+                                                            <th>City</th>
                                                             <th>Delete</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <% rData.forEach((i)=>{ %>
+                                                        <% cityData.forEach((i)=>{ %>
                                                             <tr>
                                                                 <td>
                                                                     <%= i.State %>
                                                                 </td>
                                                                 <td>
-                                                                    <%= i.State_code %>
+                                                                    <%= i.City_Name %>
                                                                 </td>
                                                                 <td>
-                                                                    <form action="/delete_state" method="post">
-                                                                        <input type="hidden" name="rid"
+                                                                    <form action="/deleteCity" method="post">
+                                                                        <input type="hidden" name="cid"
                                                                             value="<%= i._id %>">
                                                                         <button type="submit" id="delete"
                                                                             class="btn  btn-danger"><i
@@ -118,11 +119,26 @@
                 stateSave: true,
                 ordering: false,
             });
+            $('#State').change(function () {
+                var state = $(this).val();
+                $.ajax({
+                    method: 'GET',
+                    url: '/city/get_cities',
+                    data: { state: state },
+                    success: function (response) {
+                        $('#City').empty();
+                        $('#City').append('<option value="" selected>Select City</option>');
+                        response.forEach(function (city) {
+                            // console.log(city.name)
+                            $('#City').append('<option value="' + city.name + '">' + city.name + '</option>');
+                        });
+                    },
+                    error: function (error) {
+                        console.error("error in fetching the cities ", error);
+                    }
+                });
+            });
         });
     </script>
 </body>
 </html>
-
-
-
-

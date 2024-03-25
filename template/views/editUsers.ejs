@@ -1,57 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
+<%- include('./partials/head') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <body>
+        <% let dUser; %>
+            <% if (Sdata.frole==="Admin" ) { %>
+                <% dUser="d-user" ; %>
+                    <% } %>
+                        <div class="wrapper <%=dUser%> " id="targetUser">
+                            <%- include('./partials/sidebar.ejs')%>
+                                <div class="main p-3">
+                                    <!-- header  -->
+                                    <%- include('./partials/header.ejs')%>
+                                        <!-- ----------------------REGION--------------------- -->
+                                        <!-- ----------------------REGION-form--------------------- -->
+                                        <div class="container-fluid">
+                                            <div class="row justify-content-center">
+                                                <div
+                                                    class="col-lg-8 col-md-10 col-sm-12 d-flex flex-column justify-content-center align-items-center">
 
-<body>
+                                                    <!-- Message display -->
+                                                    <% if (message!='' ) { %>
+                                                        <div class="alert alert-warning alert-dismissible fade show col-md-12 mb-3 text-center"
+                                                            role="alert">
+                                                            <strong>
+                                                                <%= message %>
+                                                            </strong>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        </div>
+                                                        <% } %>
+
+                                                            <h3 class="mb-3 text-center">Region</h3>
+                                                            <%  {
+                                                                %>
+                                                                <form action="/EditUsers" method="post"
+                                                                    enctype="multipart/form-data"
+                                                                    class="ms-2 bg-dark text-white">
+                                                                    <div class="modal-body">
+
+                                                                        <div class="mb-3">
+                                                                            <input name="_id" type="hidden"
+                                                                                class="form-control reg-form bg-dark text-white"
+                                                                                value="<%=i._id.toString()%>"
+                                                                                id="fname">
+                                                                        </div>
+
+                                                                        <div class="mb-3">
+                                                                            <input name="ffname" type="text"
+                                                                                class="form-control reg-form bg-dark text-white"
+                                                                                value="<%= i.ffname %>" id="fname">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <input name="flname" type="text"
+                                                                                class="form-control reg-form bg-dark text-white"
+                                                                                value="<%= i.flname %>" id="lname">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <input name="fphone" type="tel"
+                                                                                class="form-control reg-form bg-dark text-white"
+                                                                                id="exampleInputEmail1"
+                                                                                value="<%= i.fphone %>">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label
+                                                                                class="form-label text-white">Gender</label>
+                                                                            <input class="form-check-input text-dark"
+                                                                                type="radio" name="fgender" id="male"
+                                                                                value="male" <%=i.fgender==='male'
+                                                                                ? 'checked' : '' %>>
+                                                                            <label class="form-check-label text-white"
+                                                                                for="male">Male</label>
+                                                                            <input class="form-check-input text-dark"
+                                                                                type="radio" name="fgender" id="female"
+                                                                                value="female" <%=i.fgender==='female'
+                                                                                ? 'checked' : '' %>>
+                                                                            <label class="form-check-label text-white"
+                                                                                for="female">Female</label>
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <input name="fmail" type="email"
+                                                                                class="form-control reg-form bg-dark text-white"
+                                                                                id="exampleInputEmail1"
+                                                                                value="<%= i.fmail %>">
+                                                                        </div>
+
+                                                                        <div class="mb-3">
+                                                                            <label>Profile Image :</label>
+                                                                            <img src="..\\uploads\\<%=Sdata._id.toString()%>\\<%=Sdata.photo%>"
+                                                                                style="height:100px;width:100px;" />
+                                                                            <div>
+                                                                                <input type="file"
+                                                                                    class="form-control bg-dark text-white"
+                                                                                    name="profilePic"
+                                                                                    accept="image/png, image/gif, image/jpeg, image/jpg" />
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <!-- <input type="hidden" name="_method" value="PATCH"> -->
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Save
+                                                                            changes</button>
+                                                                    </div>
+
+                                                                </form>
+
+                                                                <%  } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                        </div>
 
 
-    <form method="post" action="/editUser/<%= Udata._id %>?_method=PATCH" enctype="multipart/form-data" class="ms-2 bg-dark text-white">
 
-        <div class="modal-body">
-            <div class="mb-3">
-                <input name="ffname" type="text" class="form-control reg-form bg-dark text-white"
-                    value="<%= Udata.ffname %>" id="fname">
-            </div>
-            <div class="mb-3">
-                <input name="flname" type="text" class="form-control reg-form bg-dark text-white"
-                    value="<%= Udata.flname %>" id="lname">
-            </div>
-            <div class="mb-3">
-                <input name="fphone" type="tel" class="form-control reg-form bg-dark text-white" id="exampleInputEmail1"
-                    value="<%= Udata.fphone %>">
-            </div>
-            <div class="mb-3">
-                <label class="form-label text-white">Gender</label>
-                <input class="form-check-input text-dark" type="radio" name="fgender" id="male" value="male"
-                    <%=Udata.fgender==='male' ? 'checked' : '' %>>
-                <label class="form-check-label text-white" for="male">Male</label>
-                <input class="form-check-input text-dark" type="radio" name="fgender" id="female" value="female"
-                    <%=Udata.fgender==='female' ? 'checked' : '' %>>
-                <label class="form-check-label text-white" for="female">Female</label>
-            </div>
-            <div class="mb-3">
-                <input name="fmail" type="email" class="form-control reg-form bg-dark text-white"
-                    id="exampleInputEmail1" value="<%= Udata.fmail %>">
-            </div>
+                        <!-- Bootsatrp -->
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                            crossorigin="anonymous"></script>
 
-        </div>
+                        <!-- jquery -->
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+                            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+                            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <input type="hidden" name="_method" value="PATCH">
-            <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
+                        <script>
 
-    </form>
+                            $(document).ready(function () {
 
+                                const hamburger = $("#toggle-btn");
 
-</body>
+                                $("#toggle-btn").click(function () {
+                                    $("#sidebar").toggleClass("expand");
+                                });
+
+                                // $('.Uhide').hide();
+                                $('.active').hide();
+                                $('.in-active').hide();
+
+                                $("#blocked").click(function () {
+                                    $('.active').show();
+                                    $('.in-active').hide();
+                                });
+
+                                $("#un-blocked").click(function () {
+                                    $('.active').hide();
+                                    $('.in-active').show();
+                                });
+
+                            });
+
+                        </script>
+
+    </body>
 
 </html>
-
-

@@ -1,4 +1,4 @@
-<form action="/editProfile" method="post" enctype="multipart/form-data" class="ms-2 bg-dark text-white">
+<form action="/EditUsers" method="post" enctype="multipart/form-data" class="ms-2 bg-dark text-white">
     <div class="modal-body">
 
         <div class="mb-3">
@@ -34,7 +34,7 @@
 
         <div class="mb-3">
             <label >Profile Image :</label>
-            <img src="..\\uploads\\<%=Sdata._id.toString()%>\\<%=Sdata.photo%>" style="height:100px;width:100px;"/>
+            <img src="..\\uploads\\<%=i._id.toString()%>\\<%=i.photo%>" style="height:100px;width:100px;"/>
             <div>
                 <input type="file" class="form-control bg-dark text-white" name="profilePic" accept="image/png, image/gif, image/jpeg, image/jpg"/>
             </div>

@@ -20,9 +20,6 @@ const fs = require('fs');
 const path = require('path')
 const { State, City } = require('country-state-city')
 
-
-const methodOverride = require('method-override');
-
 const port = process.env.PORT || 3000;
 
 // Call Functions
@@ -52,8 +49,8 @@ app.use(flash());
 
 initializingPassport(passport);//PASSPORT=this function working as middleware check it out
 
-
 let sessionData;
+
 app.post('/login', passport.authenticate('local', { failureRedirect: '/' }),
     async (req, res) => {
         sessionData = req.user             //session stored
@@ -61,9 +58,7 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/' }),
             if (req.isAuthenticated()) {
                 res.redirect('/dashboard')
             }
-            else {
-                req.flash('message', '')
-            }
+            
         } catch (error) {
             res.send(error);
         }
@@ -112,7 +107,6 @@ app.get("/register", async (req, res) => {
 
 app.get("/dashboard", isAuthenticated, async (req, res) => {
     try {
-
         const UserData = await User.find();
         const ProductData = await Product.find();
         // const PRefData = await Product.find().populate("65f0b05b3bae264704aa3746");
@@ -128,8 +122,8 @@ app.get("/dashboard", isAuthenticated, async (req, res) => {
 })
 
 //========================== CRAETE ==========================
+
 app.post('/register', async (req, res) => {
-    //  console.log(req);
     try {
         var form = new formidable.IncomingForm();
         let newpath;
@@ -423,7 +417,6 @@ app.post('/rsSuccess', async (req, res) => {
                 throw new Error('Failed to send email');
             } else {
                 console.log('Email sent: ');
-                // res.redirect('/forget');
                 res.send("link sent on email")
             }
         });

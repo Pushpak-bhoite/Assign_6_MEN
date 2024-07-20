@@ -6,16 +6,14 @@ const bcrypt = require('bcrypt')
 exports.initializingPassport = (passport) => {
 
     passport.use(new LocalStrategy({ usernameField: "fmail", passwordField: 'fpass', passReqToCallback: true }, async (req, fmail, fpass, done) => {
-
         try {
-
             const user = await User.findOne({ fmail: fmail })
-
             if (!user) {
                 req.flash('message',' wrong Email ') ;
                 return done(null, false, { message: "wrong credentials" });
             }
-
+            console.log(fpass)
+            console.log(user.fpass)
             const isMatch = await bcrypt.compare(fpass ,user.fpass)
 
             if (!isMatch) {
@@ -29,6 +27,7 @@ exports.initializingPassport = (passport) => {
         }
 
     }))
+    
     // Boiler PLate OR mandatory step
     passport.serializeUser((user, done) => {   //creates user id 
         done(null, user.id);
